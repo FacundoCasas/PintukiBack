@@ -22,6 +22,6 @@ app.use("/categorias", CategoriaRouter)
 const host : string = process.env.HOST || '0.0.0.0';
 const port : number  = +process.env.PORT || 3000;
 
-app.listen(port,host, () => {
+app.listen(port, () => {
     return console.log(`Server is listening on ${port}`);
 });

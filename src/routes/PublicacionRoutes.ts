@@ -10,8 +10,8 @@ PublicacionRouter.get('', async (req, res) => {
     res.json( await publicacionService.findAll())
 })
 
-PublicacionRouter.get('/:categoria', async (req, res) => {
-    console.log("publicaciones",await publicacionService.findCategoria(String(req.params.categoria)))
+PublicacionRouter.get('categoria/:categoria', async (req, res) => {
+    console.log("publicaciones categoria",await publicacionService.findCategoria(String(req.params.categoria)))
     res.json( await publicacionService.findCategoria(String(req.params.categoria)))
 })
   

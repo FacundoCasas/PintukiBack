@@ -1,11 +1,11 @@
 class Categoria {
     private id: number;
     private titulo: string;
-    private url: string;
-    constructor(id:number, titulo:string, url:string ) {
+    private color: string;
+    constructor(id:number, titulo:string, color:string ) {
         this.id = id;
         this.titulo = titulo;
-        this.url = url;
+        this.color = color;
     }
 
     public getId(): number {
@@ -16,8 +16,8 @@ class Categoria {
         return this.titulo;
     }
 
-    public getUrl(): string {
-        return this.url;
+    public getColor(): string {
+        return this.color;
     }
 
 }

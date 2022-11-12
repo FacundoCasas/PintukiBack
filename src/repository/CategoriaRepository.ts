@@ -23,7 +23,7 @@ class CategoriaRepository implements Dao<Categoria,Number> {
         const findResult = await collection.find({}).toArray();
         // mapper
         findResult.forEach( c => categorias.push( 
-            new Categoria(c.id,c.titulo,c.url)
+            new Categoria(c.id,c.titulo,c.color)
         ));
         await this.conectarMongoDb.desconectar();
         return Promise.resolve(categorias);
@@ -36,7 +36,7 @@ class CategoriaRepository implements Dao<Categoria,Number> {
         const findResult = await collection.findOne({id:clave});
         await this.conectarMongoDb.desconectar();
         if(findResult !== null) {
-            return Promise.resolve(new Categoria(findResult.id,findResult.titulo,findResult.url));
+            return Promise.resolve(new Categoria(findResult.id,findResult.titulo,findResult.color));
         } else {
             throw new Error("No encontrado");            
         }

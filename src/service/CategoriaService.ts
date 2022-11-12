@@ -9,7 +9,7 @@ class CategoriaService {
     }
 
     async add(c : any) {
-        return await this.categoriaRepository.add(new Categoria(c.body.id, c.body.title, c.body.url));
+        return await this.categoriaRepository.add(new Categoria(c.body.id, c.body.titulo, c.body.color));
     }                                               
     async get(clave : any) {
         try {

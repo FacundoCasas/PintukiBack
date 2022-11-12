@@ -31,7 +31,7 @@ class PublicacionService {
 
     //trae las publicaciones ordenadas por ID y pide la ultima y le suma 1 para poder conseguir un nuevo ID
     async generateId() {
-        const publicaciones = await this.publicacionRepository.findAll();
+        const publicaciones = await this.publicacionRepository.findAllSortById();
         const max = publicaciones[publicaciones.length - 1];
         console.log("id nuevo:",max.getId() + 1)
         return max.getId() + 1;

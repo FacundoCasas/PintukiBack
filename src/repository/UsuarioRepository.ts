@@ -36,7 +36,7 @@ class UsuarioRepository implements Dao<Usuario,Number> {
         const findResult = await collection.findOne({id:clave});
         await this.conectarMongoDb.desconectar();
         if(findResult !== null) {
-            return Promise.resolve(new Usuario(findResult.id,findResult.usuario,findResult.contrasenia,findResult.publicacionesFavoritas, findResult.publicacionesCreadas, findResult.fotoPerfil));
+            return Promise.resolve(new Usuario(findResult.id, findResult.usuario, findResult.contrasenia, findResult.fotoPerfil, findResult.publicacionesFavoritas, findResult.publicacionesCreadas));
         } else {
             throw new Error("No encontrado");            
         }

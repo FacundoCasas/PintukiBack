@@ -71,6 +71,19 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
         }
     }
 
+    async findAllSortById () : Promise<Publicacion[]> {
+        const publicaciones : Array<Publicacion> = [];
+        const conexion = await this.conectarMongoDb.conectar();       
+        const collection = conexion.collection('publicacion');
+        const findResult = await collection.find({}).sort({id: 1}).toArray();
+        // mapper
+        findResult.forEach( p => publicaciones.push( 
+            new Publicacion(p.id,p.url,p.titulo,p.autor, p.etiquetas)
+        ));
+        await this.conectarMongoDb.desconectar();
+        return Promise.resolve(publicaciones);
+    }
+
     async shufflePublicaciones(publicaciones: any){
         return await publicaciones.sort(() => Math.random() - 0.5);
     }

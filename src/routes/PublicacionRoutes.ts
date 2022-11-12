@@ -6,8 +6,9 @@ export const PublicacionRouter = express.Router();
 const publicacionService : PublicacionService = new PublicacionService();
 
 PublicacionRouter.get('', async (req, res) => {
-    console.log("publicaciones",await publicacionService.findAll())
-    res.json( await publicacionService.findAll())
+    const publicaciones = await publicacionService.findAll()
+    console.log("cantidad publicaciones:",publicaciones.length)
+    res.json( publicaciones )
 })
 
 PublicacionRouter.get('/categoria/:categoria', async (req, res) => {
@@ -16,7 +17,7 @@ PublicacionRouter.get('/categoria/:categoria', async (req, res) => {
 })
   
 PublicacionRouter.post('', async (req, res) => {   
-    console.log(req.body.publicacion)
+    console.log("post publicacion:",req.body.publicacion)
     await publicacionService.add(req.body.publicacion);
     res.json( {"resultado": "ok"} )
 })
@@ -27,7 +28,7 @@ PublicacionRouter.delete('/:id', async (req, res) => {
 })
 
 PublicacionRouter.get('/:id', async (req, res) => {  
-    console.log(req.params.id)  
+    console.log("get publicacion:",req.params.id)  
     const publicacion = await publicacionService.get(Number(req.params.id));
     if(publicacion !== null){
         res.json( { publicacion })

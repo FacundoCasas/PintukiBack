@@ -14,8 +14,7 @@ class PublicacionService {
 
     async add(p : any) {
         // mapper de personaDto a Persona
-        await this.generateId()
-        return await this.publicacionRepository.add(new Publicacion(p.id, p.url,p.titulo,p.autor,p.etiquetas));
+        return await this.publicacionRepository.add(new Publicacion(await this.generateId(), p.url,p.titulo,p.autor,p.etiquetas));
     }                                               
     async get(clave : any) {
         try {

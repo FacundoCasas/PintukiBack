@@ -8,8 +8,7 @@ class Usuario {
     private publicacionesFavoritas: Publicacion[];
     private publicacionesCreadas: Publicacion[];
     private fotoPerfil: string;
-    constructor(id:number,usuario: string,contrasenia: string, fotoPerfil: string, publicacionesFavoritas?:Publicacion[], publicacionesCreadas?:Publicacion[]) {
-        this.id = id;
+    constructor(usuario: string,contrasenia: string, fotoPerfil: string, publicacionesFavoritas?:Publicacion[], publicacionesCreadas?:Publicacion[]) {
         this.usuario = usuario;
         this.contrasenia = contrasenia;
         this.fotoPerfil = fotoPerfil;
@@ -23,9 +22,6 @@ class Usuario {
     }
 
     //aniadir geters y seters
-    public getId(): number {
-        return this.id;
-    }
 
     public getUsuario(): string {
         return this.usuario;

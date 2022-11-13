@@ -3,7 +3,7 @@ import Dao from "./Dao";
 import ConectarMongoDb from "../database/ConectarMongoDb";
 const uri = "mongodb://localhost/pintuki"
 
-class UsuarioRepository implements Dao<Usuario,Number> {
+class UsuarioRepository implements Dao<Usuario,String> {
 
     private conectarMongoDb : ConectarMongoDb = new ConectarMongoDb();
     // futura conexion a mongodb
@@ -23,31 +23,31 @@ class UsuarioRepository implements Dao<Usuario,Number> {
         const findResult = await collection.find({}).toArray();
         // mapper
         findResult.forEach( u => usuarios.push( 
-            new Usuario(u.id, u.usuario, u.contrasenia, u.publicacionesFavoritas, u.publicacionesCreadas, u.fotoPerfil)
+            new Usuario(u.usuario, u.contrasenia, u.fotoPerfil, u.publicacionesFavoritas, u.publicacionesCreadas)
         ));
         await this.conectarMongoDb.desconectar();
         return Promise.resolve(usuarios);
     }
 
-    async get (clave: Number) : Promise<Usuario> {
+    async get (clave: String) : Promise<Usuario> {
         // podria haber un try catch y finally para cerrar la conexion
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('usuario');
-        const findResult = await collection.findOne({id:clave});
+        const findResult = await collection.findOne({usuario:clave});
         await this.conectarMongoDb.desconectar();
         if(findResult !== null) {
-            return Promise.resolve(new Usuario(findResult.id, findResult.usuario, findResult.contrasenia, findResult.fotoPerfil, findResult.publicacionesFavoritas, findResult.publicacionesCreadas));
+            return Promise.resolve(new Usuario(findResult.usuario, findResult.contrasenia, findResult.fotoPerfil, findResult.publicacionesFavoritas, findResult.publicacionesCreadas));
         } else {
             throw new Error("No encontrado");            
         }
     }
     
     // tratar de usar bajas logicas
-    async delete (clave: Number) : Promise<Boolean> {
+    async delete (clave: String) : Promise<Boolean> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('usuario');
         // puede ser también deleteOne  (depende el contexto de diseño del sistema)
-        const findResult = await collection.deleteOne({id:clave});
+        const findResult = await collection.deleteOne({usuario:clave});
         await this.conectarMongoDb.desconectar();
         if(findResult !== null) {
             return Promise.resolve(true);
@@ -64,10 +64,11 @@ class UsuarioRepository implements Dao<Usuario,Number> {
         const findResult = await collection.findOne({usuario: clave.username});
         await this.conectarMongoDb.desconectar();
         if(findResult !== null && findResult.contrasenia === clave.password) {
-            return Promise.resolve(new Usuario(findResult.id,findResult.usuario,findResult.contrasenia,findResult.publicacionesFavoritas, findResult.publicacionesCreadas, findResult.fotoPerfil));
+            return Promise.resolve(new Usuario(findResult.usuario,findResult.contrasenia, findResult.fotoPerfil,findResult.publicacionesFavoritas, findResult.publicacionesCreadas));
         } else {
             throw new Error("Usuario o contraseña no encontrado");            
         }
     }
+
 }
 export default UsuarioRepository

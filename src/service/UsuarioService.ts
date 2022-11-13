@@ -4,15 +4,19 @@ import UsuarioRepository from "../repository/UsuarioRepository";
 class UsarioService {
     usuarioRepository : UsuarioRepository = new UsuarioRepository();
 
+    /*
     async findAll() {
         return await this.usuarioRepository.findAll();
     }
+    */
 
     async add(u : any) {
         // mapper de personaDto a Persona
-        return await this.usuarioRepository.add(new Usuario(u.id, u.usuario, u.contrasenia, "https://i.ibb.co/KjFFfmq/diego-pintuki-01.jpg"));
+        return await this.usuarioRepository.add(new Usuario( u.usuario, u.contrasenia, "https://i.ibb.co/KjFFfmq/diego-pintuki-01.jpg"));
         //u.fotoPerfil
-    }                                               
+    }       
+    
+    /*
     async get(clave : any) {
         try {
             return await this.usuarioRepository.get(Number(clave));
@@ -20,10 +24,11 @@ class UsarioService {
             throw e
         }
     }
+    */
 
     // tratar de usar bajas logicas
     async delete(clave: any) {
-        return await this.usuarioRepository.delete(Number(clave));
+        return await this.usuarioRepository.delete(String(clave));
     }
 
     async login(clave : any) {
@@ -33,6 +38,7 @@ class UsarioService {
             throw e
         }
     }
+
 }
 
 export default UsarioService

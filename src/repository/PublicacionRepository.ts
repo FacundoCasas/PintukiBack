@@ -25,7 +25,7 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
         findResult.forEach( p => publicaciones.push( 
             new Publicacion(p.id,p.url,p.titulo,p.autor, p.etiquetas)
         ));
-        this.shufflePublicaciones(publicaciones);
+        //this.shufflePublicaciones(publicaciones);
         await this.conectarMongoDb.desconectar();
         return Promise.resolve(publicaciones);
     }
@@ -39,7 +39,7 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
         findResult.forEach( p => publicaciones.push( 
             new Publicacion(p.id,p.url,p.titulo,p.autor, p.etiquetas)
         ));
-        this.shufflePublicaciones(publicaciones);
+        //this.shufflePublicaciones(publicaciones);
         await this.conectarMongoDb.desconectar();
         return Promise.resolve(publicaciones);
     }
@@ -84,8 +84,5 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
         return Promise.resolve(publicaciones);
     }
 
-    async shufflePublicaciones(publicaciones: any){
-        return await publicaciones.sort(() => Math.random() - 0.5);
-    }
 }
 export default PublicacionRepository

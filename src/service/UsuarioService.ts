@@ -13,10 +13,10 @@ class UsarioService {
     async add(u : any) {
         // mapper de personaDto a Persona
         try{
-            let clave= { username: u.usuario , password: u.contrasenia}
-            const usuarioBuscado = await this.usuarioRepository.login(clave);
+            
+            const usuarioEncontrado = await this.usuarioRepository.userExist(u.usuario);
 
-            if(usuarioBuscado == null){
+            if(!usuarioEncontrado){
                 return await this.usuarioRepository.add(new Usuario( u.usuario, u.contrasenia, u.fotoPerfil));
             }else{
                 console.log("Usuario service Back" ,"usuario ya existe")

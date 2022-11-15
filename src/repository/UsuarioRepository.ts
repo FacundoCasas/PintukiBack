@@ -41,6 +41,20 @@ class UsuarioRepository implements Dao<Usuario,String> {
             throw new Error("No encontrado");            
         }
     }
+
+    async userExist (clave: String) : Promise<Boolean>{
+        const conexion = await this.conectarMongoDb.conectar();       
+        const collection = conexion.collection('usuario');
+        const findResult = await collection.findOne({usuario:clave});
+        await this.conectarMongoDb.desconectar();
+        if(findResult!== null){
+            return Promise.resolve(true);
+        }else{
+            return Promise.resolve(false);
+        }
+    }
+
+
     
     // tratar de usar bajas logicas
     async delete (clave: String) : Promise<Boolean> {

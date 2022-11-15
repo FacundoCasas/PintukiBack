@@ -15,15 +15,15 @@ class UsarioService {
         return await this.usuarioRepository.add(new Usuario( u.usuario, u.contrasenia, u.fotoPerfil));
     }       
     
-    /*
+    
     async get(clave : any) {
         try {
-            return await this.usuarioRepository.get(Number(clave));
+            return await this.usuarioRepository.get(clave);
         } catch(e) {
             throw e
         }
     }
-    */
+    
 
     // tratar de usar bajas logicas
     async delete(clave: any) {
@@ -38,6 +38,15 @@ class UsarioService {
         }
     }
 
+    async favoritos(data : any) {
+        try {
+            let usuario : Usuario = await this.get(data.username);
+            usuario.addPublicacionFavorita(data.publicacionId);
+            await this.usuarioRepository.update(usuario);
+        } catch(e) {
+            throw e
+        }
+    } 
 }
 
 export default UsarioService

@@ -11,6 +11,16 @@ PublicacionRouter.get('', async (req, res) => {
     res.json( publicaciones )
 })
 
+PublicacionRouter.get('/:id', async (req, res) => {  
+    console.log("get publicacion:",req.params.id)  
+    const publicacion = await publicacionService.get(Number(req.params.id));
+    if(publicacion !== null){
+        res.json( { publicacion })
+    }else{
+        res.json({ "resultado":`No se encontro la publicacion con el id : ${req.params.id}` })
+    }    
+})
+
 PublicacionRouter.get('/categoria/:categoria', async (req, res) => {
     console.log("publicaciones categoria",await publicacionService.findCategoria(String(req.params.categoria)))
     res.json( await publicacionService.findCategoria(String(req.params.categoria)))
@@ -27,14 +37,6 @@ PublicacionRouter.delete('/:id', async (req, res) => {
     res.json( {"resultado": "ok"} )    
 })
 
-PublicacionRouter.get('/:id', async (req, res) => {  
-    console.log("get publicacion:",req.params.id)  
-    const publicacion = await publicacionService.get(Number(req.params.id));
-    if(publicacion !== null){
-        res.json( { publicacion })
-    }else{
-        res.json({ "resultado":`No se encontro la publicacion con el id : ${req.params.id}` })
-    }    
-})
+
 
 

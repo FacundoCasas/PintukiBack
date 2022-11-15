@@ -1,14 +1,13 @@
-import Publicacion from "./Publicacion";
 
 class Usuario {
     //cambiar tipo de autor y etiqueta
     private id : number;
     private usuario: string;
     private contrasenia: string;
-    private publicacionesFavoritas: Publicacion[];
-    private publicacionesCreadas: Publicacion[];
+    private publicacionesFavoritas: number[];
+    private publicacionesCreadas: number[];
     private fotoPerfil: string;
-    constructor(usuario: string,contrasenia: string, fotoPerfil: string, publicacionesFavoritas?:Publicacion[], publicacionesCreadas?:Publicacion[]) {
+    constructor(usuario: string,contrasenia: string, fotoPerfil: string, publicacionesFavoritas?:number[], publicacionesCreadas?:number[]) {
         this.usuario = usuario;
         this.contrasenia = contrasenia;
         this.fotoPerfil = fotoPerfil;
@@ -30,14 +29,21 @@ class Usuario {
     public getContrasenia(): string {
         return this.contrasenia;
     }
-    public getPublicacionesFavoritas(): Publicacion[] {
+    public getPublicacionesFavoritas(): number[] {
         return this.publicacionesFavoritas;
     }
-    public getPublicacionesCreadas(): Publicacion[] {
+    public getPublicacionesCreadas(): number[] {
         return this.publicacionesCreadas;
     }
     public getFotoPerfil(): string {
         return this.fotoPerfil;
+    }
+    public addPublicacionFavorita(id : number){
+        this.publicacionesFavoritas.push(id);
+    }
+
+    public addPublicacionCreada(id : number){
+        this.publicacionesCreadas.push(id);
     }
 }
 export default Usuario;

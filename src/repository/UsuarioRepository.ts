@@ -70,5 +70,13 @@ class UsuarioRepository implements Dao<Usuario,String> {
         }
     }
 
+    async update (element: Usuario) : Promise<Boolean> {
+        const conexion = await this.conectarMongoDb.conectar();       
+        const collection = conexion.collection('usuario');
+        const newvalues = { $set: {publicacionesFavoritas: element.addPublicacionFavorita} };
+        collection.updateOne({ usuario: element.getUsuario }, newvalues);
+        await this.conectarMongoDb.desconectar();
+        return Promise.resolve(true);
+    }
 }
 export default UsuarioRepository

@@ -1,6 +1,5 @@
 import Publicacion from "../models/Publicacion";
 import PublicacionRepository from "../repository/PublicacionRepository";
-
 class PublicacionService {
     publicacionRepository : PublicacionRepository = new PublicacionRepository();
 
@@ -15,14 +14,15 @@ class PublicacionService {
     async add(p : any) {
         // mapper de personaDto a Persona
         return await this.publicacionRepository.add(new Publicacion(await this.generateId(), p.url,p.titulo,p.autor,p.etiquetas));
-    }                                               
+    }   
+
     async get(clave : any) {
         try {
             return await this.publicacionRepository.get(Number(clave));
         } catch(e) {
             return null;
         }
-    }
+    } 
 
     // tratar de usar bajas logicas
     async delete(clave: any) {

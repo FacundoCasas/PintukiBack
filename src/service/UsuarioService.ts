@@ -19,6 +19,7 @@ class UsarioService {
             if(usuarioBuscado == null){
                 return await this.usuarioRepository.add(new Usuario( u.usuario, u.contrasenia, u.fotoPerfil));
             }else{
+                console.log("Usuario service Back" ,"usuario ya existe")
                 return null
             }
         }catch (e){

@@ -37,16 +37,26 @@ class UsarioService {
             throw e
         }
     }
-
+    
     async favoritos(data : any) {
         try {
             let usuario : Usuario = await this.get(data.username);
             usuario.addPublicacionFavorita(data.publicacionId);
             await this.usuarioRepository.update(usuario);
         } catch(e) {
-            throw e
+            console.log(e)
         }
     } 
+    
+   /*
+    async favoritos(data : any) {
+        try {
+            await this.usuarioRepository.update(data);
+        } catch(e) {
+            console.log(e)
+        }
+    } 
+    */
 }
 
 export default UsarioService

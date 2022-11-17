@@ -34,4 +34,8 @@ UsuarioRouter.post('/login', async (req, res) => {
     res.json( await usuarioService.login(req.body.clave) )    
 })
 
+UsuarioRouter.post('/favoritos', async (req, res) => {  
+    console.log("usuarioFavoritos", req.body.data)  
+    res.json( await usuarioService.favoritos(req.body.data) )    
+})
 

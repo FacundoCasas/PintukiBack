@@ -69,14 +69,34 @@ class UsuarioRepository implements Dao<Usuario,String> {
             throw new Error("Usuario o contraseña no encontrado");            
         }
     }
-
+    
     async update (element: Usuario) : Promise<Boolean> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('usuario');
-        const newvalues = { $set: {publicacionesFavoritas: element.addPublicacionFavorita} };
-        collection.updateOne({ usuario: element.getUsuario }, newvalues);
+        const newvalues = { $set: {publicacionesFavoritas: element.getPublicacionesFavoritas()} };
+        await collection.updateOne({ usuario: element.getUsuario }, newvalues);
         await this.conectarMongoDb.desconectar();
         return Promise.resolve(true);
     }
+    
+   /*
+    async update (data: any) : Promise<Boolean> {
+        const conexion = await this.conectarMongoDb.conectar();       
+        const collection = conexion.collection('usuario');
+        const findUsuario = await collection.findOne({usuario: data.username});
+        if(findUsuario !== null ) {
+            const usuario = new Usuario(findUsuario.usuario,findUsuario.contrasenia, findUsuario.fotoPerfil,findUsuario.publicacionesFavoritas, findUsuario.publicacionesCreadas)
+            console.log("usuario",usuario)
+            usuario.addPublicacionFavorita(data.publicacionId)
+            const newvalues = { $set: {publicacionesFavoritas: usuario.getPublicacionesFavoritas()} };
+            await collection.updateOne({ usuario: usuario.getUsuario }, newvalues);
+            await this.conectarMongoDb.desconectar();
+            return Promise.resolve(true);
+        }else{
+            await this.conectarMongoDb.desconectar();
+            throw new Error("Usuario no encontrado"); 
+        }    
+    }
+    */
 }
 export default UsuarioRepository

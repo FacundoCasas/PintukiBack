@@ -4,11 +4,11 @@ class PublicacionService {
     publicacionRepository : PublicacionRepository = new PublicacionRepository();
 
     async findAll() {
-        return await this.publicacionRepository.findAll();
+        return await this.shufflePublicaciones(await this.publicacionRepository.findAll());
     }
 
     async findCategoria(categoria : any) {
-        return await this.publicacionRepository.findCategoria(String(categoria));
+        return await  this.shufflePublicaciones(await this.publicacionRepository.findCategoria(String(categoria)));
     }
 
     async add(p : any) {
@@ -37,6 +37,9 @@ class PublicacionService {
         return max.getId() + 1;
     }
 
+    async shufflePublicaciones(publicaciones: any){
+        return await publicaciones.sort(() => Math.random() - 0.5);
+    }
 }
 
 export default PublicacionService

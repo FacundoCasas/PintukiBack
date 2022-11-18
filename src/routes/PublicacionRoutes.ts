@@ -22,10 +22,24 @@ PublicacionRouter.get('/:id', async (req, res) => {
 })
 
 PublicacionRouter.get('/categoria/:categoria', async (req, res) => {
-    console.log("publicaciones categoria",await publicacionService.findCategoria(String(req.params.categoria)))
-    res.json( await publicacionService.findCategoria(String(req.params.categoria)))
+    const publicaciones = await publicacionService.findCategoria(String(req.params.categoria))
+    console.log("publicaciones categoria",publicaciones)
+    res.json( publicaciones)
 })
-  
+
+PublicacionRouter.get('/usuario/:usuario', async (req, res) => {
+    const publicaciones = await publicacionService.findUsuario(String(req.params.usuario))
+    console.log("publicaciones categoria",publicaciones)
+    res.json( publicaciones)
+})
+
+PublicacionRouter.post('/favoritos', async (req, res) => {
+    console.log("dato",req.body.data.ids)
+    const publicaciones = await publicacionService.findInArray(req.body.data.ids)
+    console.log("publicaciones favoritas",publicaciones)
+    res.json( publicaciones)
+})
+
 PublicacionRouter.post('', async (req, res) => {   
     console.log("post publicacion:",req.body.publicacion)
     await publicacionService.add(req.body.publicacion);

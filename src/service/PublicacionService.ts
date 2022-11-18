@@ -11,6 +11,15 @@ class PublicacionService {
         return await  this.shufflePublicaciones(await this.publicacionRepository.findCategoria(String(categoria)));
     }
 
+    async findUsuario(usuario : any) {
+        return await  this.shufflePublicaciones(await this.publicacionRepository.findUsuario(String(usuario)));
+    }
+
+    async findInArray(ids : any) {
+        return await  this.shufflePublicaciones(await this.publicacionRepository.findInArray(ids));
+    }
+
+    
     async add(p : any) {
         // mapper de personaDto a Persona
         return await this.publicacionRepository.add(new Publicacion(await this.generateId(), p.url,p.titulo,p.autor,p.etiquetas));

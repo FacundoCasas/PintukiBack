@@ -13,8 +13,7 @@ UsuarioRouter.get('', async (req, res) => {
 */
 
 UsuarioRouter.post('', async (req, res) => {   
-    await usuarioService.add(req.body.usuario);
-    res.json( {"resultado": "ok"} )
+    res.json( await usuarioService.add(req.body.usuario) );
 })
 
 UsuarioRouter.delete('/:id', async (req, res) => {

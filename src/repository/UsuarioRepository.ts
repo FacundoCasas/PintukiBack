@@ -80,7 +80,8 @@ class UsuarioRepository implements Dao<Usuario,String> {
         if(findResult !== null && findResult.contrasenia === clave.password) {
             return Promise.resolve(new Usuario(findResult.usuario,findResult.contrasenia, findResult.fotoPerfil,findResult.publicacionesFavoritas, findResult.publicacionesCreadas));
         } else {
-            throw new Error("Usuario o contraseña no encontrado");            
+            return null
+            //throw new Error("Usuario o contraseña no encontrado");            
         }
     }
     

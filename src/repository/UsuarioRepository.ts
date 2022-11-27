@@ -6,7 +6,6 @@ const uri = "mongodb://localhost/pintuki"
 class UsuarioRepository implements Dao<Usuario,String> {
 
     private conectarMongoDb : ConectarMongoDb = new ConectarMongoDb();
-    // futura conexion a mongodb
 
     async add (element: Usuario) : Promise<Boolean> {
         const conexion = await this.conectarMongoDb.conectar();       
@@ -21,7 +20,6 @@ class UsuarioRepository implements Dao<Usuario,String> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('usuario');
         const findResult = await collection.find({}).toArray();
-        // mapper
         findResult.forEach( u => usuarios.push( 
             new Usuario(u.usuario, u.contrasenia, u.fotoPerfil, u.publicacionesFavoritas, u.publicacionesCreadas)
         ));
@@ -30,7 +28,6 @@ class UsuarioRepository implements Dao<Usuario,String> {
     }
 
     async get (clave: String) : Promise<Usuario> {
-        // podria haber un try catch y finally para cerrar la conexion
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('usuario');
         const findResult = await collection.findOne({usuario:clave});
@@ -54,13 +51,9 @@ class UsuarioRepository implements Dao<Usuario,String> {
         }
     }
 
-
-    
-    // tratar de usar bajas logicas
     async delete (clave: String) : Promise<Boolean> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('usuario');
-        // puede ser también deleteOne  (depende el contexto de diseño del sistema)
         const findResult = await collection.deleteOne({usuario:clave});
         await this.conectarMongoDb.desconectar();
         if(findResult !== null) {
@@ -72,7 +65,6 @@ class UsuarioRepository implements Dao<Usuario,String> {
 
 
     async login (clave: any) : Promise<Usuario> {
-        // podria haber un try catch y finally para cerrar la conexion
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('usuario');
         const findResult = await collection.findOne({usuario: clave.username});
@@ -80,8 +72,7 @@ class UsuarioRepository implements Dao<Usuario,String> {
         if(findResult !== null && findResult.contrasenia === clave.password) {
             return Promise.resolve(new Usuario(findResult.usuario,findResult.contrasenia, findResult.fotoPerfil,findResult.publicacionesFavoritas, findResult.publicacionesCreadas));
         } else {
-            return null
-            //throw new Error("Usuario o contraseña no encontrado");            
+            return null     
         }
     }
     
@@ -94,24 +85,5 @@ class UsuarioRepository implements Dao<Usuario,String> {
         return Promise.resolve(true);
     }
     
-   /*
-    async update (data: any) : Promise<Boolean> {
-        const conexion = await this.conectarMongoDb.conectar();       
-        const collection = conexion.collection('usuario');
-        const findUsuario = await collection.findOne({usuario: data.username});
-        if(findUsuario !== null ) {
-            const usuario = new Usuario(findUsuario.usuario,findUsuario.contrasenia, findUsuario.fotoPerfil,findUsuario.publicacionesFavoritas, findUsuario.publicacionesCreadas)
-            console.log("usuario",usuario)
-            usuario.addPublicacionFavorita(data.publicacionId)
-            const newvalues = { $set: {publicacionesFavoritas: usuario.getPublicacionesFavoritas()} };
-            await collection.updateOne({ usuario: usuario.getUsuario }, newvalues);
-            await this.conectarMongoDb.desconectar();
-            return Promise.resolve(true);
-        }else{
-            await this.conectarMongoDb.desconectar();
-            throw new Error("Usuario no encontrado"); 
-        }    
-    }
-    */
 }
 export default UsuarioRepository

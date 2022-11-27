@@ -1,5 +1,5 @@
 class Publicacion {
-    //cambiar tipo de autor y etiqueta
+
     private id : number;
     private url: string;
     private titulo: string;
@@ -12,8 +12,6 @@ class Publicacion {
         this.autor = autor;
         this.etiquetas = etiquetas;
     }
-
-    //aniadir geters y seters
 
     public getId(): number {
         return this.id;

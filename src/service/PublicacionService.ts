@@ -21,7 +21,6 @@ class PublicacionService {
 
     
     async add(p : any) {
-        // mapper de personaDto a Persona
         return await this.publicacionRepository.add(new Publicacion(await this.generateId(), p.url,p.titulo,p.autor,p.etiquetas));
     }   
 
@@ -33,12 +32,10 @@ class PublicacionService {
         }
     } 
 
-    // tratar de usar bajas logicas
     async delete(clave: any) {
         return await this.publicacionRepository.delete(Number(clave));
     }
 
-    //trae las publicaciones ordenadas por ID y pide la ultima y le suma 1 para poder conseguir un nuevo ID
     async generateId() {
         const publicaciones = await this.publicacionRepository.findAllSortById();
         if(publicaciones.length === 0){

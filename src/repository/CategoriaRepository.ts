@@ -6,7 +6,6 @@ const uri = "mongodb://localhost/pintuki"
 class CategoriaRepository implements Dao<Categoria,Number> {
 
     private conectarMongoDb : ConectarMongoDb = new ConectarMongoDb();
-    // futura conexion a mongodb
 
     async add (element: Categoria) : Promise<Boolean> {
         const conexion = await this.conectarMongoDb.conectar();       
@@ -21,7 +20,6 @@ class CategoriaRepository implements Dao<Categoria,Number> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('categoria');
         const findResult = await collection.find({}).toArray();
-        // mapper
         findResult.forEach( c => categorias.push( 
             new Categoria(c.id,c.titulo,c.color)
         ));
@@ -30,7 +28,6 @@ class CategoriaRepository implements Dao<Categoria,Number> {
     }
 
     async get (clave: Number) : Promise<Categoria> {
-        // podria haber un try catch y finally para cerrar la conexion
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('categoria');
         const findResult = await collection.findOne({id:clave});
@@ -42,11 +39,9 @@ class CategoriaRepository implements Dao<Categoria,Number> {
         }
     }
     
-    // tratar de usar bajas logicas
     async delete (clave: Number) : Promise<Boolean> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('categoria');
-        // puede ser también deleteOne  (depende el contexto de diseño del sistema)
         const findResult = await collection.deleteOne({id:clave});
         await this.conectarMongoDb.desconectar();
         if(findResult !== null) {

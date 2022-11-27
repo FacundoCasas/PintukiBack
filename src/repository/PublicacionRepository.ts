@@ -6,7 +6,6 @@ const uri = "mongodb://localhost/pintuki"
 class PublicacionRepository implements Dao<Publicacion,Number> {
 
     private conectarMongoDb : ConectarMongoDb = new ConectarMongoDb();
-    // futura conexion a mongodb
 
     async add (element: Publicacion) : Promise<Boolean> {
         const conexion = await this.conectarMongoDb.conectar();       
@@ -21,11 +20,9 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('publicacion');
         const findResult = await collection.find({}).toArray();
-        // mapper
         findResult.forEach( p => publicaciones.push( 
             new Publicacion(p.id,p.url,p.titulo,p.autor, p.etiquetas)
         ));
-        //this.shufflePublicaciones(publicaciones);
         await this.conectarMongoDb.desconectar();
         return Promise.resolve(publicaciones);
     }
@@ -35,11 +32,9 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('publicacion');
         const findResult = await collection.find({etiquetas:categoria}).toArray();
-        // mapper
         findResult.forEach( p => publicaciones.push( 
             new Publicacion(p.id,p.url,p.titulo,p.autor, p.etiquetas)
         ));
-        //this.shufflePublicaciones(publicaciones);
         await this.conectarMongoDb.desconectar();
         return Promise.resolve(publicaciones);
     }
@@ -49,11 +44,9 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('publicacion');
         const findResult = await collection.find({autor:usuario}).toArray();
-        // mapper
         findResult.forEach( p => publicaciones.push( 
             new Publicacion(p.id,p.url,p.titulo,p.autor, p.etiquetas)
         ));
-        //this.shufflePublicaciones(publicaciones);
         await this.conectarMongoDb.desconectar();
         return Promise.resolve(publicaciones);
     }
@@ -63,7 +56,6 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('publicacion');
         const findResult = await collection.find({ id: { $in: ids }}).toArray();
-        // mapper
         findResult.forEach( p => publicaciones.push( 
             new Publicacion(p.id,p.url,p.titulo,p.autor, p.etiquetas)
         ));
@@ -72,7 +64,6 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
     }
     
     async get (clave: Number) : Promise<Publicacion> {
-        // podria haber un try catch y finally para cerrar la conexion
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('publicacion');
         const findResult = await collection.findOne({id:clave});
@@ -84,11 +75,9 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
         }
     }
     
-    // tratar de usar bajas logicas
     async delete (clave: Number) : Promise<Boolean> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('publicacion');
-        // puede ser también deleteOne  (depende el contexto de diseño del sistema)
         const findResult = await collection.deleteOne({id:clave});
         await this.conectarMongoDb.desconectar();
         if(findResult !== null) {
@@ -103,7 +92,6 @@ class PublicacionRepository implements Dao<Publicacion,Number> {
         const conexion = await this.conectarMongoDb.conectar();       
         const collection = conexion.collection('publicacion');
         const findResult = await collection.find({}).sort({id: 1}).toArray();
-        // mapper
         findResult.forEach( p => publicaciones.push( 
             new Publicacion(p.id,p.url,p.titulo,p.autor, p.etiquetas)
         ));

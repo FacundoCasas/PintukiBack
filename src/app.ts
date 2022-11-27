@@ -5,7 +5,7 @@ import { CategoriaRouter } from './routes/CategoriaRoutes';
 import cors from 'cors';
 import * as dotenv from 'dotenv'
 dotenv.config({path:'variables.env'})
-//process.env.DB_URL
+
 const app = express();
 app.use(cors())
 app.use(express.json())
@@ -22,7 +22,6 @@ app.use("/publicaciones", PublicacionRouter)
 app.use("/usuarios", UsuarioRouter)
 app.use("/categorias", CategoriaRouter)
 
-//leer localhost de variables y puerto
 const host : string = process.env.HOST || '0.0.0.0';
 const port : number  = +process.env.PORT || 3000;
 

@@ -1,6 +1,6 @@
 
 class Usuario {
-    //cambiar tipo de autor y etiqueta
+
     private id : number;
     private usuario: string;
     private contrasenia: string;
@@ -20,12 +20,10 @@ class Usuario {
         }
     }
 
-    //aniadir geters y seters
-
     public getUsuario(): string {
         return this.usuario;
     }
-    //modificar a privado o eso se hace en el service?
+
     public getContrasenia(): string {
         return this.contrasenia;
     }

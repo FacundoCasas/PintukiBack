@@ -19,7 +19,6 @@ class CategoriaService {
         }
     }
 
-    // tratar de usar bajas logicas
     async delete(clave: any) {
         return await this.categoriaRepository.delete(Number(clave));
     }
